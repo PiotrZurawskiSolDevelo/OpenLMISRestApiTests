@@ -16,7 +16,7 @@ public class TokenHelper {
     ObjectMapper mapper = new ObjectMapper();
 
     public String returnCreatedToken(String serverURL) throws IOException {
-        String APIUrl = serverURL + "8081/oauth/token?grant_type=password&username=admin&password=password";
+        String APIUrl = serverURL + "/oauth/token?grant_type=password&username=admin&password=password";
         builder.setContentType("application/json");
         RequestSpecification requestSpec = builder.build();
         Response response = given().authentication().preemptive().basic("trusted-client", "secret").spec(requestSpec).when().post(APIUrl);

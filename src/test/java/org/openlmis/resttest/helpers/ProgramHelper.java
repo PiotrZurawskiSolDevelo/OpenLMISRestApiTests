@@ -14,8 +14,8 @@ public class ProgramHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createOrEditProgramUsingAllVariables(String serverURL, Integer portNumber, String token, String jsonBody) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/programs" + token;
+    public JsonNode createOrEditProgramUsingAllVariables(String serverURL, String token, String jsonBody) throws IOException {
+        String APIUrl = serverURL + "/api/programs" + token;
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();

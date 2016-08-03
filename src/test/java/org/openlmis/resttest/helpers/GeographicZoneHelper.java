@@ -15,8 +15,8 @@ public class GeographicZoneHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createGeographicZones(String serverURL,  Integer portNumber, String token,  String jsonBody) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/geographicZones" + token;
+    public JsonNode createGeographicZones(String serverURL, String token, String jsonBody) throws IOException {
+        String APIUrl = serverURL + "/api/geographicZones" + token;
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();

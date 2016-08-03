@@ -16,8 +16,8 @@ public class FacilityHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createFacility(String serverURL, Integer portNumber ,String token, String facilityTypesHref, String geographicZonesHref) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/facilities" + token;
+    public JsonNode createFacility(String serverURL,String token, String facilityTypesHref, String geographicZonesHref) throws IOException {
+        String APIUrl = serverURL + "/api/facilities" + token;
         String APIBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
                 "\"geographicZone\":\"" + geographicZonesHref + "\"," +
                 "\"type\":\"" + facilityTypesHref + "\"," +

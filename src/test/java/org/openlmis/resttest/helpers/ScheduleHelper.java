@@ -16,8 +16,8 @@ public class ScheduleHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createSchedule(String serverURL, Integer portNumber, String token) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/schedules" + token;
+    public JsonNode createSchedule(String serverURL, String token) throws IOException {
+        String APIUrl = serverURL + "/api/schedules" + token;
         String APIBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
                 "\"name\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"}";
         builder.setContentType("application/json");

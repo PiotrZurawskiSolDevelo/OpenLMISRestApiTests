@@ -15,8 +15,8 @@ public class GeographicLevelHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createGeographicLevel(String serverURL, Integer portNumber, String token, String jsonBody) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/geographicLevels" + token;
+    public JsonNode createGeographicLevel(String serverURL, String token, String jsonBody) throws IOException {
+        String APIUrl = serverURL + "/api/geographicLevels" + token;
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();

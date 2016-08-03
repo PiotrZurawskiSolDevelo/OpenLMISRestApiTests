@@ -23,8 +23,8 @@ import java.util.Random;
 
 public class CreateRequisitionRestTest {
 
-    private static final String SERVER_URL = "http://10.222.17.187:";
-    private static final Integer SERVER_PORT = 8080;
+    private static final String REQUISITIONS_URL = "http://10.222.17.187:8080";
+    private static final String AUTH_URL = "http://10.222.17.187:8081";
     private String tokenValue = "?access_token=";
     private TokenHelper tokenHelper = new TokenHelper();
     private ProgramHelper programHelper = new ProgramHelper();
@@ -37,8 +37,8 @@ public class CreateRequisitionRestTest {
     private Random rand = new Random();
     @Before
     public void createToken() throws IOException {
-        tokenValue += tokenHelper.returnCreatedToken(SERVER_URL);
-        System.out.println("TOKEN: "+tokenValue);
+        tokenValue += tokenHelper.returnCreatedToken(AUTH_URL);
+        System.out.println("TOKEN: " +tokenValue);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         String convertedJson = sub.replace(value);
-        JsonNode programJson = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
+        JsonNode programJson = programHelper.createOrEditProgramUsingAllVariables(REQUISITIONS_URL, tokenValue, convertedJson);
 
         valuesMap.clear();
         code = RandomStringUtils.randomAlphabetic(5);
@@ -76,7 +76,7 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode geographicLevelJson = geographicLevelHelper.createGeographicLevel(SERVER_URL, SERVER_PORT,  tokenValue, convertedJson);
+        JsonNode geographicLevelJson = geographicLevelHelper.createGeographicLevel(REQUISITIONS_URL, tokenValue, convertedJson);
         String level = geographicLevelJson.get("_links").get("geographicLevelHelper").get("href").asText();
 
         valuesMap.clear();
@@ -96,7 +96,7 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode geographicZoneJson = geographicZoneHelper.createGeographicZones(SERVER_URL, SERVER_PORT,  tokenValue, convertedJson);
+        JsonNode geographicZoneJson = geographicZoneHelper.createGeographicZones(REQUISITIONS_URL,  tokenValue, convertedJson);
         String geographicZone = geographicZoneJson.get("_links").get("geographicZone").get("href").asText();
 
         valuesMap.clear();
@@ -115,10 +115,10 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode facilityTypeJson = facilityTypeHelper.createFacilityType(SERVER_URL, SERVER_PORT,  tokenValue, convertedJson);
+        JsonNode facilityTypeJson = facilityTypeHelper.createFacilityType(REQUISITIONS_URL, tokenValue, convertedJson);
         String facilityTypesHref = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
-        JsonNode facilityJson = facilityHelper.createFacility(SERVER_URL, SERVER_PORT, tokenValue, facilityTypesHref, geographicZone);
-        JsonNode scheduleJson = scheduleHelper.createSchedule(SERVER_URL, SERVER_PORT, tokenValue);
+        JsonNode facilityJson = facilityHelper.createFacility(REQUISITIONS_URL, tokenValue, facilityTypesHref, geographicZone);
+        JsonNode scheduleJson = scheduleHelper.createSchedule(REQUISITIONS_URL, tokenValue);
 
     }
 }

@@ -21,8 +21,7 @@ import java.util.Map;
  * This test should create new Program, edit created program and check possibility to change Program code and Program name;
  */
 public class EditProgramCodeAndNameRestTest {
-    private static final String SERVER_URL = "http://10.222.17.187:";
-    private static final Integer SERVER_PORT = 8080;
+    private static final String SERVER_URL = "http://10.222.17.187:8080";
     private String tokenValue = "?access_token=";
     private TokenHelper tokenHelper = new TokenHelper();
     private ProgramHelper programHelper = new ProgramHelper();
@@ -52,10 +51,10 @@ public class EditProgramCodeAndNameRestTest {
         }
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
         String convertedJson = sub.replace(value);
-        JsonNode program1 = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
+        JsonNode program1 = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, tokenValue, convertedJson);
         JsonNode links = program1.get("_links");
         JsonNode programJson = links.get("program");
-        id = programJson.get("href").asText().substring((SERVER_URL + SERVER_PORT + "/api/programs/").length());
+        id = programJson.get("href").asText().substring((SERVER_URL + "/api/programs/").length());
         code = RandomStringUtils.randomAlphabetic(5);
         name = RandomStringUtils.randomAlphabetic(5);
         valuesMap.put("code", code);
@@ -66,8 +65,8 @@ public class EditProgramCodeAndNameRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode program2 = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
-        Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((SERVER_URL + SERVER_PORT + "/api/programs/").length()));
+        JsonNode program2 = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, tokenValue, convertedJson);
+        Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((SERVER_URL + "/api/programs/").length()));
         Assert.assertNotEquals(program1.get("code").asText(), program2.get("code").asText());
         Assert.assertNotEquals(program1.get("name").asText(), program2.get("name").asText());
     }

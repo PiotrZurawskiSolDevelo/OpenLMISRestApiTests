@@ -15,8 +15,8 @@ public class FacilityTypeHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createFacilityType(String serverURL, Integer portNumber, String token, String jsonBody) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/facilityTypes" + token;
+    public JsonNode createFacilityType(String serverURL, String token, String jsonBody) throws IOException {
+        String APIUrl = serverURL + "/api/facilityTypes" + token;
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();

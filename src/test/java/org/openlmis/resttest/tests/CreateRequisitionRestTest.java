@@ -6,13 +6,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.junit.Before;
 import org.junit.Test;
-import org.openlmis.resttest.helpers.FacilityHelper;
-import org.openlmis.resttest.helpers.FacilityTypeHelper;
-import org.openlmis.resttest.helpers.GeographicLevelHelper;
-import org.openlmis.resttest.helpers.GeographicZoneHelper;
-import org.openlmis.resttest.helpers.ProgramHelper;
-import org.openlmis.resttest.helpers.ScheduleHelper;
-import org.openlmis.resttest.helpers.TokenHelper;
+import org.openlmis.resttest.AbstractRestTest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,24 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class CreateRequisitionRestTest {
+public class CreateRequisitionRestTest extends AbstractRestTest {
 
     private static final String REQUISITIONS_URL = "http://10.222.17.187:8080";
     private static final String AUTH_URL = "http://10.222.17.187:8081";
     private String tokenValue = "?access_token=";
-    private TokenHelper tokenHelper = new TokenHelper();
-    private ProgramHelper programHelper = new ProgramHelper();
-    private GeographicLevelHelper geographicLevelHelper = new GeographicLevelHelper();
-    private GeographicZoneHelper geographicZoneHelper = new GeographicZoneHelper();
-    private FacilityTypeHelper facilityTypeHelper = new FacilityTypeHelper();
-    private FacilityHelper facilityHelper = new FacilityHelper();
-    private ScheduleHelper scheduleHelper = new ScheduleHelper();
+
     private Map<String, String> valuesMap = new HashMap<>();
     private Random rand = new Random();
 
     @Before
     public void createToken() throws IOException {
-        tokenValue += tokenHelper.returnCreatedToken(AUTH_URL);
+        tokenValue += getTokenHelper().returnCreatedToken(AUTH_URL);
         System.out.println("TOKEN: " +tokenValue);
     }
 
@@ -63,7 +51,7 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         String convertedJson = sub.replace(value);
-        JsonNode programJson = programHelper.createOrEditProgramUsingAllVariables(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode programJson = getProgramHelper().createOrEditProgramUsingAllVariables(REQUISITIONS_URL, tokenValue, convertedJson);
 
         valuesMap.clear();
         code = RandomStringUtils.randomAlphabetic(5);
@@ -77,7 +65,7 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode geographicLevelJson = geographicLevelHelper.createGeographicLevel(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode geographicLevelJson = getGeographicLevelHelper().createGeographicLevel(REQUISITIONS_URL, tokenValue, convertedJson);
         String level = geographicLevelJson.get("_links").get("geographicLevelHelper").get("href").asText();
 
         valuesMap.clear();
@@ -97,7 +85,7 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode geographicZoneJson = geographicZoneHelper.createGeographicZones(REQUISITIONS_URL,  tokenValue, convertedJson);
+        JsonNode geographicZoneJson = getGeographicZoneHelper().createGeographicZones(REQUISITIONS_URL, tokenValue, convertedJson);
         String geographicZone = geographicZoneJson.get("_links").get("geographicZone").get("href").asText();
 
         valuesMap.clear();
@@ -116,10 +104,10 @@ public class CreateRequisitionRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode facilityTypeJson = facilityTypeHelper.createFacilityType(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode facilityTypeJson = getFacilityTypeHelper().createFacilityType(REQUISITIONS_URL, tokenValue, convertedJson);
         String facilityTypesHref = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
-        JsonNode facilityJson = facilityHelper.createFacility(REQUISITIONS_URL, tokenValue, facilityTypesHref, geographicZone);
-        JsonNode scheduleJson = scheduleHelper.createSchedule(REQUISITIONS_URL, tokenValue);
+        JsonNode facilityJson = getFacilityHelper().createFacility(REQUISITIONS_URL, tokenValue, facilityTypesHref, geographicZone);
+        JsonNode scheduleJson = getScheduleHelper().createSchedule(REQUISITIONS_URL, tokenValue);
 
     }
 }

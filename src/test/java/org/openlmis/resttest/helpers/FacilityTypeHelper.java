@@ -23,10 +23,6 @@ public class FacilityTypeHelper {
         Response response = given().spec(requestSpec).post(APIUrl);
         String responseSting = response.asString();
         return mapper.readTree(responseSting);
-
-
-
-
     }
 }
 

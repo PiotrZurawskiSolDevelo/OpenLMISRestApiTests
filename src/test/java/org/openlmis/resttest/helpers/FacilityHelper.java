@@ -11,9 +11,6 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Created by user on 8/2/16.
- */
 public class FacilityHelper {
 
     RequestSpecBuilder builder = new RequestSpecBuilder();

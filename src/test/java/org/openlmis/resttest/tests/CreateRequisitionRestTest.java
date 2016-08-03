@@ -21,9 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by user on 8/2/16.
- */
 public class CreateRequisitionRestTest {
 
     private static final String SERVER_URL = "http://10.222.17.187:";

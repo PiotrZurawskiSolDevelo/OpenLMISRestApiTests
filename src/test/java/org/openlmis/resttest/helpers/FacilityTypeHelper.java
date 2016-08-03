@@ -10,10 +10,8 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Created by user on 8/2/16.
- */
 public class FacilityTypeHelper {
+
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 

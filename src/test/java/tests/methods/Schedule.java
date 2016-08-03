@@ -1,4 +1,4 @@
-package testy.methods;
+package tests.methods;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,14 +14,14 @@ import static io.restassured.RestAssured.given;
 /**
  * Created by user on 8/2/16.
  */
-public class GeographicZone {
+public class Schedule {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createGeographicZones(String serverURL,  Integer portNumber, String token,  String geographicLevel) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/geographicZones" + token;
+    public JsonNode createSchedule(String serverURL, Integer portNumber, String token) throws IOException {
+        String APIUrl = serverURL + portNumber + "/api/schedules" + token;
         String APIBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
-                "\"level\":\"" + geographicLevel + "\"}";
+                "\"name\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"}";
         builder.setContentType("application/json");
         builder.setBody(APIBody);
         RequestSpecification requestSpec = builder.build();

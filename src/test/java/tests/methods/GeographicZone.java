@@ -1,28 +1,24 @@
-package testy.methods;
+package tests.methods;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.IOException;
-import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 
 /**
  * Created by user on 8/2/16.
  */
-public class GeographicLevel {
-
+public class GeographicZone {
     RequestSpecBuilder builder = new RequestSpecBuilder();
-    Random rand = new Random();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createGeographicLevel(String serverURL, Integer portNumber, String token, String jsonBody) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/geographicLevels" + token;
+    public JsonNode createGeographicZones(String serverURL,  Integer portNumber, String token,  String jsonBody) throws IOException {
+        String APIUrl = serverURL + portNumber + "/api/geographicZones" + token;
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();

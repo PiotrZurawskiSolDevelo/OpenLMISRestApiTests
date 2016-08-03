@@ -1,4 +1,4 @@
-package testy.tests;
+package tests.tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.io.IOUtils;
@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import testy.methods.Program;
-import testy.methods.Token;
+import tests.methods.Program;
+import tests.methods.Token;
 
 import java.io.IOException;
 import java.io.InputStream;

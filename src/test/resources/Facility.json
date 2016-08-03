@@ -1,0 +1,12 @@
+{
+  "code": "${code}",
+  "name": "${name}",
+  "type": "${type}",
+  "operator": "${operator}",
+  "active": "${active}",
+  "goLiveDate": "${goLiveDate}",
+  "goDownDate": "${goDownDate}",
+  "comment": "${comment}",
+  "enabled": "${enabled}",
+  "openLmisAccessible": "${openLmisAccessible}"
+}

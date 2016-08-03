@@ -1,0 +1,7 @@
+{
+  "code": "${code}",
+  "name": "${name}",
+  "description": "${description}",
+  "displayOrder": "${displayOrder}",
+  "active": "${active}"
+}

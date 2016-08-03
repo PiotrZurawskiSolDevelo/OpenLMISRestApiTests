@@ -35,6 +35,7 @@ public class CreateRequisitionRestTest {
     private ScheduleHelper scheduleHelper = new ScheduleHelper();
     private Map<String, String> valuesMap = new HashMap<>();
     private Random rand = new Random();
+
     @Before
     public void createToken() throws IOException {
         tokenValue += tokenHelper.returnCreatedToken(AUTH_URL);
@@ -42,7 +43,7 @@ public class CreateRequisitionRestTest {
     }
 
     @Test
-    public void createRequisiton() throws IOException {
+    public void createRequisition() throws IOException {
         String value;
         StrSubstitutor sub;
         String code = RandomStringUtils.randomAlphabetic(5);

@@ -1,0 +1,9 @@
+{
+  "id":"${id}",
+  "code":"${code}",
+  "name":"${name}",
+  "description":"${description}",
+  "active":"${active}",
+  "periodsSkippable":"${periodsSkippable}",
+  "showNonFullSupplyTab":"${showNonFullSupplyTab}"
+}

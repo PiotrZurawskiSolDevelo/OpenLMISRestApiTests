@@ -1,0 +1,8 @@
+{
+  "code": "${code}",
+  "name": "${name}",
+  "level": "${level}",
+  "catchmentPopulation": "${catchmentPopulation}",
+  "latitude": "${latitude}",
+  "longitude": "${longitude}"
+}

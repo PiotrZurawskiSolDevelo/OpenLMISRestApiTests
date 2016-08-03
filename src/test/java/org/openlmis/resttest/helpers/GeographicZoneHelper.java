@@ -1,4 +1,4 @@
-package tests.methods;
+package org.openlmis.resttest.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,18 +13,17 @@ import static io.restassured.RestAssured.given;
 /**
  * Created by user on 8/2/16.
  */
-public class Token {
-    public Token(){};
+public class GeographicZoneHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public String returnCreatedToken(String serverURL) throws IOException {
-        String APIUrl = serverURL + "8081/oauth/token?grant_type=password&username=admin&password=password";
+    public JsonNode createGeographicZones(String serverURL,  Integer portNumber, String token,  String jsonBody) throws IOException {
+        String APIUrl = serverURL + portNumber + "/api/geographicZones" + token;
         builder.setContentType("application/json");
+        builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();
-        Response response = given().authentication().preemptive().basic("trusted-client", "secret").spec(requestSpec).when().post(APIUrl);
-        String responseSting = response.getBody().asString();
-        JsonNode obj = mapper.readTree(responseSting);
-        return obj.get("access_token").textValue();
+        Response response = given().spec(requestSpec).post(APIUrl);
+        String responseSting = response.asString();
+        return mapper.readTree(responseSting);
     }
 }

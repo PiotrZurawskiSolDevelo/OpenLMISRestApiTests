@@ -1,4 +1,4 @@
-package tests.methods;
+package org.openlmis.resttest.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.given;
 /**
  * Created by user on 8/2/16.
  */
-public class Schedule {
+public class ScheduleHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 

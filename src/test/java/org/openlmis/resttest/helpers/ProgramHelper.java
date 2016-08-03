@@ -1,4 +1,4 @@
-package tests.methods;
+package org.openlmis.resttest.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,18 +7,18 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import java.io.IOException;
-
 import static io.restassured.RestAssured.given;
 
 /**
  * Created by user on 8/2/16.
  */
-public class GeographicZone {
+public class ProgramHelper {
+
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createGeographicZones(String serverURL,  Integer portNumber, String token,  String jsonBody) throws IOException {
-        String APIUrl = serverURL + portNumber + "/api/geographicZones" + token;
+    public JsonNode createOrEditProgramUsingAllVariables(String serverURL, Integer portNumber, String token, String jsonBody) throws IOException {
+        String APIUrl = serverURL + portNumber + "/api/programs" + token;
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
         RequestSpecification requestSpec = builder.build();

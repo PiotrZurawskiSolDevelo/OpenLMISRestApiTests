@@ -1,4 +1,4 @@
-package tests.tests;
+package org.openlmis.resttest.tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.io.IOUtils;
@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import tests.methods.Program;
-import tests.methods.Token;
+import org.openlmis.resttest.helpers.ProgramHelper;
+import org.openlmis.resttest.helpers.TokenHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,12 +24,12 @@ public class EditProgramCodeAndNameRestTest {
     private static final String SERVER_URL = "http://10.222.17.187:";
     private static final Integer SERVER_PORT = 8080;
     private String tokenValue = "?access_token=";
-    private Token token = new Token();
-    private Program program = new Program();
+    private TokenHelper tokenHelper = new TokenHelper();
+    private ProgramHelper programHelper = new ProgramHelper();
     private Map<String, String> valuesMap = new HashMap<>();
     @Before
     public void createToken() throws IOException {
-        tokenValue += token.returnCreatedToken(SERVER_URL);
+        tokenValue += tokenHelper.returnCreatedToken(SERVER_URL);
     }
 
     @Test //OLMIS-230
@@ -52,7 +52,7 @@ public class EditProgramCodeAndNameRestTest {
         }
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
         String convertedJson = sub.replace(value);
-        JsonNode program1 = program.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
+        JsonNode program1 = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
         JsonNode links = program1.get("_links");
         JsonNode programJson = links.get("program");
         id = programJson.get("href").asText().substring((SERVER_URL + SERVER_PORT + "/api/programs/").length());
@@ -66,7 +66,7 @@ public class EditProgramCodeAndNameRestTest {
         }
         sub = new StrSubstitutor(valuesMap);
         convertedJson = sub.replace(value);
-        JsonNode program2 = program.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
+        JsonNode program2 = programHelper.createOrEditProgramUsingAllVariables(SERVER_URL, SERVER_PORT, tokenValue, convertedJson);
         Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((SERVER_URL + SERVER_PORT + "/api/programs/").length()));
         Assert.assertNotEquals(program1.get("code").asText(), program2.get("code").asText());
         Assert.assertNotEquals(program1.get("name").asText(), program2.get("name").asText());

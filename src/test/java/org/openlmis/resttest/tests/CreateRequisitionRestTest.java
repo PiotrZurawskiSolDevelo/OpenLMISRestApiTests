@@ -23,6 +23,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         token = getTokenHelper().returnCreatedToken(getUsername(), getPassword());
     }
 
+    // TODO: map logic should go to helpers
     @Test
     public void createRequisition() throws IOException {
         String code = RandomStringUtils.randomAlphabetic(5);

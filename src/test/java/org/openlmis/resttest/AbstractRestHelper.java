@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 
 public abstract class AbstractRestHelper {
 
+    // TODO: Use RAML for rest assured
     private RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
     private ObjectMapper objectMapper = new ObjectMapper();
 

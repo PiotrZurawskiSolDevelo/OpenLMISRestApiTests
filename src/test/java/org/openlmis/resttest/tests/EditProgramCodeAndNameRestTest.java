@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This test should create new Program, edit created program and check possibility to change Program code and Program name;
+ * This test should create new Program, edit the created program and check the possibility of changing both the Program code and Program name;
  */
 public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
 

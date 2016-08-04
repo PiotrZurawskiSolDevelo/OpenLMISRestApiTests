@@ -14,7 +14,6 @@ import java.util.Random;
 
 public class CreateRequisitionRestTest extends AbstractRestTest {
 
-
     private String token;
 
     private Random rand = new Random();

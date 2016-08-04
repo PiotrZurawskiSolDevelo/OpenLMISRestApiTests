@@ -42,7 +42,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
 
-        String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
+        String convertedJson = JsonUtil.readJsonFileAsString("json/Program.json", valuesMap);
         JsonNode program1 = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
         JsonNode links = program1.get("_links");
         JsonNode programJson = links.get("program");
@@ -55,7 +55,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("name", name);
         valuesMap.put("id", id);
 
-        convertedJson = JsonUtil.readJsonFileAsString("EditProgram.json", valuesMap);
+        convertedJson = JsonUtil.readJsonFileAsString("json/EditProgram.json", valuesMap);
         JsonNode program2 = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
 
         Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((getRequisitionsUrl() + "/api/programs/").length()));

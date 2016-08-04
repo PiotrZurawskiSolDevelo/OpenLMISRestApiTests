@@ -39,7 +39,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("active", active);
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
-        String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
+        String convertedJson = JsonUtil.readJsonFileAsString("json/Program.json", valuesMap);
         JsonNode programJson = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
 
         valuesMap.clear();
@@ -49,7 +49,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("code", code);
         valuesMap.put("name", name);
         valuesMap.put("levelNumber", levelNumber.toString());
-        convertedJson = JsonUtil.readJsonFileAsString("GeographicLevel.json", valuesMap);
+        convertedJson = JsonUtil.readJsonFileAsString("json/GeographicLevel.json", valuesMap);
         JsonNode geographicLevelJson = getGeographicLevelHelper().createGeographicLevel(token, convertedJson);
         String level = geographicLevelJson.get("_links").get("geographicLevelHelper").get("href").asText();
 
@@ -65,7 +65,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("catchmentPopulation", catchmentPopulation.toString());
         valuesMap.put("latitude", latitude.toString());
         valuesMap.put("longitude", longitude.toString());
-        convertedJson = JsonUtil.readJsonFileAsString("GeographicZone.json", valuesMap);
+        convertedJson = JsonUtil.readJsonFileAsString("json/GeographicZone.json", valuesMap);
         JsonNode geographicZoneJson = getGeographicZoneHelper().createGeographicZones(token, convertedJson);
         String geographicZone = geographicZoneJson.get("_links").get("geographicZone").get("href").asText();
 
@@ -80,7 +80,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("description", description);
         valuesMap.put("displayOrder", displayOrder.toString());
         valuesMap.put("active", active);
-        convertedJson = JsonUtil.readJsonFileAsString("FacilityType.json", valuesMap);
+        convertedJson = JsonUtil.readJsonFileAsString("json/FacilityType.json", valuesMap);
         JsonNode facilityTypeJson = getFacilityTypeHelper().createFacilityType(token, convertedJson);
         String facilityTypesHref = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
         JsonNode facilityJson = getFacilityHelper().createFacility(token, facilityTypesHref, geographicZone);

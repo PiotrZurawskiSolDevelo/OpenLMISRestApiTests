@@ -1,7 +1,6 @@
 package org.openlmis.resttest.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -15,9 +14,6 @@ import static io.restassured.RestAssured.given;
 
 public class TokenHelper extends AbstractRestHelper {
 
-    RequestSpecBuilder builder = new RequestSpecBuilder();
-    ObjectMapper mapper = new ObjectMapper();
-
     public TokenHelper(String baseUrl) {
         super(baseUrl, "/oauth/token");
     }
@@ -30,13 +26,15 @@ public class TokenHelper extends AbstractRestHelper {
                     .addParameter("password", password)
                     .build();
 
+            RequestSpecBuilder builder = getRequestSpecBuilder();
+
             builder.setContentType("application/json");
             RequestSpecification requestSpec = builder.build();
 
             Response response = given().auth().preemptive().basic("trusted-client", "secret").spec(requestSpec).when().post(apiUrl);
 
             String responseSting = response.getBody().asString();
-            JsonNode obj = mapper.readTree(responseSting);
+            JsonNode obj = getObjectMapper().readTree(responseSting);
 
             return obj.get("access_token").textValue();
         } catch (URISyntaxException e) {

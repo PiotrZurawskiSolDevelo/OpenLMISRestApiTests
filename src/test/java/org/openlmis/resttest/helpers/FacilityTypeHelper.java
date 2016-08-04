@@ -1,7 +1,6 @@
 package org.openlmis.resttest.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -14,15 +13,14 @@ import static io.restassured.RestAssured.given;
 
 public class FacilityTypeHelper extends AbstractRestHelper {
 
-    RequestSpecBuilder builder = new RequestSpecBuilder();
-    ObjectMapper mapper = new ObjectMapper();
-
     public FacilityTypeHelper(String baseUrl) {
         super(baseUrl, "/api/facilityTypes");
     }
 
     public JsonNode createFacilityType(String token, String jsonBody) throws IOException {
         URI apiUri = uri(token);
+
+        RequestSpecBuilder builder = getRequestSpecBuilder();
 
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
@@ -32,7 +30,7 @@ public class FacilityTypeHelper extends AbstractRestHelper {
         Response response = given().spec(requestSpec).post(apiUri);
         String responseSting = response.asString();
 
-        return mapper.readTree(responseSting);
+        return getObjectMapper().readTree(responseSting);
     }
 }
 

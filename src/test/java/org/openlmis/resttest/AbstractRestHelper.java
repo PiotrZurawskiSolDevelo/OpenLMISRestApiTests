@@ -1,11 +1,16 @@
 package org.openlmis.resttest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.builder.RequestSpecBuilder;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public abstract class AbstractRestHelper {
+
+    private RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     private String baseUrl;
     private String path;
@@ -21,6 +26,14 @@ public abstract class AbstractRestHelper {
 
     protected String getPath() {
         return path;
+    }
+
+    protected ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
+    protected RequestSpecBuilder getRequestSpecBuilder() {
+        return requestSpecBuilder;
     }
 
     protected URIBuilder uriBuilder() {

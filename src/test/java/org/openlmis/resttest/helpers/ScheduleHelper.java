@@ -1,7 +1,6 @@
 package org.openlmis.resttest.helpers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -15,9 +14,6 @@ import static io.restassured.RestAssured.given;
 
 public class ScheduleHelper extends AbstractRestHelper {
 
-    RequestSpecBuilder builder = new RequestSpecBuilder();
-    ObjectMapper mapper = new ObjectMapper();
-
     public ScheduleHelper(String baseUrl) {
         super(baseUrl, "api/schedule");
     }
@@ -27,6 +23,9 @@ public class ScheduleHelper extends AbstractRestHelper {
 
         String apiBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
                 "\"name\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"}";
+
+        RequestSpecBuilder builder = getRequestSpecBuilder();
+
         builder.setContentType("application/json");
         builder.setBody(apiBody);
 
@@ -35,6 +34,6 @@ public class ScheduleHelper extends AbstractRestHelper {
         Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
 
-        return mapper.readTree(responseSting);
+        return getObjectMapper().readTree(responseSting);
     }
 }

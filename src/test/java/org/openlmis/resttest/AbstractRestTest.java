@@ -27,7 +27,7 @@ public abstract class AbstractRestTest {
     private String authUrl;
 
     @Before
-    public void setUp() throws IOException {
+    public void baseSetUp() throws IOException {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("test-config.properties")) {
             Properties properties = new Properties();
             properties.load(inputStream);

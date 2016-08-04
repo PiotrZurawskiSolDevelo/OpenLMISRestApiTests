@@ -19,7 +19,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
     private Random rand = new Random();
 
     @Before
-    public void createToken() throws IOException {
+    public void setUp() throws IOException {
         tokenValue += getTokenHelper().returnCreatedToken();
         System.out.println("TOKEN: " +tokenValue);
     }

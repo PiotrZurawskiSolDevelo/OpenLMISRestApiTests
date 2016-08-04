@@ -20,7 +20,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
     private String tokenValue = "?access_token=";
 
     @Before
-    public void createToken() throws IOException {
+    public void setUp() throws IOException {
         tokenValue += getTokenHelper().returnCreatedToken();
     }
 

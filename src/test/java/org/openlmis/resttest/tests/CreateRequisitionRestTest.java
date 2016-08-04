@@ -18,7 +18,6 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
     private static final String AUTH_URL = "http://10.222.17.187:8081";
     private String tokenValue = "?access_token=";
 
-    private Map<String, String> valuesMap = new HashMap<>();
     private Random rand = new Random();
 
     @Before
@@ -35,6 +34,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         String active = "false";
         String periodsSkippable = "false";
         String showNonFullSupplyTab = "false";
+        Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put("code", code);
         valuesMap.put("name", name);
         valuesMap.put("description", description);

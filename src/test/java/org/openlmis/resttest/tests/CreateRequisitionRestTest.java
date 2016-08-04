@@ -1,16 +1,13 @@
 package org.openlmis.resttest.tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.text.StrSubstitutor;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlmis.resttest.AbstractRestTest;
+import org.openlmis.resttest.util.JsonUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -32,8 +29,6 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
 
     @Test
     public void createRequisition() throws IOException {
-        String value;
-        StrSubstitutor sub;
         String code = RandomStringUtils.randomAlphabetic(5);
         String name = RandomStringUtils.randomAlphabetic(5);
         String description = RandomStringUtils.randomAlphabetic(10);
@@ -46,11 +41,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("active", active);
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("Program.json")) {
-            value = IOUtils.toString(in, Charset.forName("UTF-8"));
-        }
-        sub = new StrSubstitutor(valuesMap);
-        String convertedJson = sub.replace(value);
+        String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
         JsonNode programJson = getProgramHelper().createOrEditProgramUsingAllVariables(REQUISITIONS_URL, tokenValue, convertedJson);
 
         valuesMap.clear();
@@ -60,11 +51,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("code", code);
         valuesMap.put("name", name);
         valuesMap.put("levelNumber", levelNumber.toString());
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("GeographicLevel.json")) {
-            value = IOUtils.toString(in, Charset.forName("UTF-8"));
-        }
-        sub = new StrSubstitutor(valuesMap);
-        convertedJson = sub.replace(value);
+        convertedJson = JsonUtil.readJsonFileAsString("GeographicLevel.json", valuesMap);
         JsonNode geographicLevelJson = getGeographicLevelHelper().createGeographicLevel(REQUISITIONS_URL, tokenValue, convertedJson);
         String level = geographicLevelJson.get("_links").get("geographicLevelHelper").get("href").asText();
 
@@ -80,11 +67,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("catchmentPopulation", catchmentPopulation.toString());
         valuesMap.put("latitude", latitude.toString());
         valuesMap.put("longitude", longitude.toString());
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("GeographicZone.json")) {
-            value = IOUtils.toString(in, Charset.forName("UTF-8"));
-        }
-        sub = new StrSubstitutor(valuesMap);
-        convertedJson = sub.replace(value);
+        convertedJson = JsonUtil.readJsonFileAsString("GeographicZone.json", valuesMap);
         JsonNode geographicZoneJson = getGeographicZoneHelper().createGeographicZones(REQUISITIONS_URL, tokenValue, convertedJson);
         String geographicZone = geographicZoneJson.get("_links").get("geographicZone").get("href").asText();
 
@@ -99,11 +82,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("description", description);
         valuesMap.put("displayOrder", displayOrder.toString());
         valuesMap.put("active", active);
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("FacilityType.json")) {
-            value = IOUtils.toString(in, Charset.forName("UTF-8"));
-        }
-        sub = new StrSubstitutor(valuesMap);
-        convertedJson = sub.replace(value);
+        convertedJson = JsonUtil.readJsonFileAsString("FacilityType.json", valuesMap);
         JsonNode facilityTypeJson = getFacilityTypeHelper().createFacilityType(REQUISITIONS_URL, tokenValue, convertedJson);
         String facilityTypesHref = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
         JsonNode facilityJson = getFacilityHelper().createFacility(REQUISITIONS_URL, tokenValue, facilityTypesHref, geographicZone);

@@ -1,17 +1,14 @@
 package org.openlmis.resttest.tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.text.StrSubstitutor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlmis.resttest.AbstractRestTest;
+import org.openlmis.resttest.util.JsonUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,11 +41,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("active", active);
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("Program.json")) {
-            value = IOUtils.toString(in, Charset.forName("UTF-8"));
-        }
-        StrSubstitutor sub = new StrSubstitutor(valuesMap);
-        String convertedJson = sub.replace(value);
+        String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
         JsonNode program1 = getProgramHelper().createOrEditProgramUsingAllVariables(SERVER_URL, tokenValue, convertedJson);
         JsonNode links = program1.get("_links");
         JsonNode programJson = links.get("program");
@@ -58,11 +51,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("code", code);
         valuesMap.put("name", name);
         valuesMap.put("id", id);
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("EditProgram.json")) {
-            value = IOUtils.toString(in, Charset.forName("UTF-8"));
-        }
-        sub = new StrSubstitutor(valuesMap);
-        convertedJson = sub.replace(value);
+        convertedJson = JsonUtil.readJsonFileAsString("EditProgram.json", valuesMap);
         JsonNode program2 = getProgramHelper().createOrEditProgramUsingAllVariables(SERVER_URL, tokenValue, convertedJson);
         Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((SERVER_URL + "/api/programs/").length()));
         Assert.assertNotEquals(program1.get("code").asText(), program2.get("code").asText());

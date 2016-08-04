@@ -17,11 +17,11 @@ import java.util.Map;
  */
 public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
 
-    private String token = "?access_token=";
+    private String token;
 
     @Before
     public void setUp() throws IOException {
-        token += getTokenHelper().returnCreatedToken();
+        token = getTokenHelper().returnCreatedToken(getUsername(), getPassword());
     }
 
     //OLMIS-230

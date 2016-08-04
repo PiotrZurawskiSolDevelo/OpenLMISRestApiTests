@@ -22,12 +22,12 @@ public class TokenHelper extends AbstractRestHelper {
         super(baseUrl, "/oauth/token");
     }
 
-    public String returnCreatedToken() throws IOException {
+    public String returnCreatedToken(String username, String password) throws IOException {
         try {
             URI apiUrl = uriBuilder()
                     .addParameter("grant_type", "password")
-                    .addParameter("username", "admin")
-                    .addParameter("password", "password")
+                    .addParameter("username", username)
+                    .addParameter("password", password)
                     .build();
 
             builder.setContentType("application/json");

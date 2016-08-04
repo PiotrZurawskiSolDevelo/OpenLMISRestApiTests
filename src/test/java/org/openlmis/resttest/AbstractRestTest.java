@@ -25,6 +25,8 @@ public abstract class AbstractRestTest {
 
     private String requisitionsUrl;
     private String authUrl;
+    private String username;
+    private String password;
 
     @Before
     public void baseSetUp() throws IOException {
@@ -34,6 +36,8 @@ public abstract class AbstractRestTest {
 
             requisitionsUrl = properties.getProperty("requisitions.api.url");
             authUrl = properties.getProperty("auth.api.url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
 
             tokenHelper = new TokenHelper(authUrl);
 
@@ -108,5 +112,13 @@ public abstract class AbstractRestTest {
 
     protected String getAuthUrl() {
         return authUrl;
+    }
+
+    protected String getUsername() {
+        return username;
+    }
+
+    protected String getPassword() {
+        return password;
     }
 }

@@ -17,12 +17,11 @@ import java.util.Map;
  */
 public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
 
-    private static final String SERVER_URL = "http://10.222.17.187:8080";
     private String tokenValue = "?access_token=";
 
     @Before
     public void createToken() throws IOException {
-        tokenValue += getTokenHelper().returnCreatedToken(SERVER_URL);
+        tokenValue += getTokenHelper().returnCreatedToken();
     }
 
     //OLMIS-230
@@ -44,11 +43,11 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
 
         String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
-        JsonNode program1 = getProgramHelper().createOrEditProgramUsingAllVariables(SERVER_URL, tokenValue, convertedJson);
+        JsonNode program1 = getProgramHelper().createOrEditProgramUsingAllVariables(tokenValue, convertedJson);
         JsonNode links = program1.get("_links");
         JsonNode programJson = links.get("program");
 
-        String id = programJson.get("href").asText().substring((SERVER_URL + "/api/programs/").length());
+        String id = programJson.get("href").asText().substring((getRequisitionsUrl() + "/api/programs/").length());
         code = RandomStringUtils.randomAlphabetic(5);
         name = RandomStringUtils.randomAlphabetic(5);
 
@@ -57,9 +56,9 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("id", id);
 
         convertedJson = JsonUtil.readJsonFileAsString("EditProgram.json", valuesMap);
-        JsonNode program2 = getProgramHelper().createOrEditProgramUsingAllVariables(SERVER_URL, tokenValue, convertedJson);
+        JsonNode program2 = getProgramHelper().createOrEditProgramUsingAllVariables(tokenValue, convertedJson);
 
-        Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((SERVER_URL + "/api/programs/").length()));
+        Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((getRequisitionsUrl() + "/api/programs/").length()));
         Assert.assertNotEquals(program1.get("code").asText(), program2.get("code").asText());
         Assert.assertNotEquals(program1.get("name").asText(), program2.get("name").asText());
     }

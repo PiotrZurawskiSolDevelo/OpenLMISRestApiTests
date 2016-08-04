@@ -1,5 +1,6 @@
 package org.openlmis.resttest;
 
+import org.junit.Before;
 import org.openlmis.resttest.helpers.FacilityHelper;
 import org.openlmis.resttest.helpers.FacilityTypeHelper;
 import org.openlmis.resttest.helpers.GeographicLevelHelper;
@@ -8,15 +9,42 @@ import org.openlmis.resttest.helpers.ProgramHelper;
 import org.openlmis.resttest.helpers.ScheduleHelper;
 import org.openlmis.resttest.helpers.TokenHelper;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public abstract class AbstractRestTest {
 
-    private TokenHelper tokenHelper = new TokenHelper();
-    private ProgramHelper programHelper = new ProgramHelper();
-    private GeographicLevelHelper geographicLevelHelper = new GeographicLevelHelper();
-    private GeographicZoneHelper geographicZoneHelper = new GeographicZoneHelper();
-    private FacilityTypeHelper facilityTypeHelper = new FacilityTypeHelper();
-    private FacilityHelper facilityHelper = new FacilityHelper();
-    private ScheduleHelper scheduleHelper = new ScheduleHelper();
+    private TokenHelper tokenHelper;
+    private ProgramHelper programHelper;
+    private GeographicLevelHelper geographicLevelHelper;
+    private GeographicZoneHelper geographicZoneHelper;
+    private FacilityTypeHelper facilityTypeHelper;
+    private FacilityHelper facilityHelper;
+    private ScheduleHelper scheduleHelper;
+
+    private String requisitionsUrl;
+    private String authUrl;
+
+    @Before
+    public void setUp() throws IOException {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("test-config.properties")) {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+
+            requisitionsUrl = properties.getProperty("requisitions.api.url");
+            authUrl = properties.getProperty("auth.api.url");
+
+            tokenHelper = new TokenHelper(authUrl);
+
+            programHelper = new ProgramHelper(requisitionsUrl);
+            geographicLevelHelper = new GeographicLevelHelper(requisitionsUrl);
+            geographicZoneHelper = new GeographicZoneHelper(requisitionsUrl);
+            facilityTypeHelper = new FacilityTypeHelper(requisitionsUrl);
+            facilityHelper = new FacilityHelper(requisitionsUrl);
+            scheduleHelper = new ScheduleHelper(requisitionsUrl);
+        }
+    }
 
     protected TokenHelper getTokenHelper() {
         return tokenHelper;
@@ -72,5 +100,13 @@ public abstract class AbstractRestTest {
 
     protected void setScheduleHelper(ScheduleHelper scheduleHelper) {
         this.scheduleHelper = scheduleHelper;
+    }
+
+    protected String getRequisitionsUrl() {
+        return requisitionsUrl;
+    }
+
+    protected String getAuthUrl() {
+        return authUrl;
     }
 }

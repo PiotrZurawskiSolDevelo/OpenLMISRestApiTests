@@ -14,15 +14,13 @@ import java.util.Random;
 
 public class CreateRequisitionRestTest extends AbstractRestTest {
 
-    private static final String REQUISITIONS_URL = "http://10.222.17.187:8080";
-    private static final String AUTH_URL = "http://10.222.17.187:8081";
     private String tokenValue = "?access_token=";
 
     private Random rand = new Random();
 
     @Before
     public void createToken() throws IOException {
-        tokenValue += getTokenHelper().returnCreatedToken(AUTH_URL);
+        tokenValue += getTokenHelper().returnCreatedToken();
         System.out.println("TOKEN: " +tokenValue);
     }
 
@@ -42,7 +40,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
         String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
-        JsonNode programJson = getProgramHelper().createOrEditProgramUsingAllVariables(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode programJson = getProgramHelper().createOrEditProgramUsingAllVariables(tokenValue, convertedJson);
 
         valuesMap.clear();
         code = RandomStringUtils.randomAlphabetic(5);
@@ -52,7 +50,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("name", name);
         valuesMap.put("levelNumber", levelNumber.toString());
         convertedJson = JsonUtil.readJsonFileAsString("GeographicLevel.json", valuesMap);
-        JsonNode geographicLevelJson = getGeographicLevelHelper().createGeographicLevel(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode geographicLevelJson = getGeographicLevelHelper().createGeographicLevel(tokenValue, convertedJson);
         String level = geographicLevelJson.get("_links").get("geographicLevelHelper").get("href").asText();
 
         valuesMap.clear();
@@ -68,7 +66,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("latitude", latitude.toString());
         valuesMap.put("longitude", longitude.toString());
         convertedJson = JsonUtil.readJsonFileAsString("GeographicZone.json", valuesMap);
-        JsonNode geographicZoneJson = getGeographicZoneHelper().createGeographicZones(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode geographicZoneJson = getGeographicZoneHelper().createGeographicZones(tokenValue, convertedJson);
         String geographicZone = geographicZoneJson.get("_links").get("geographicZone").get("href").asText();
 
         valuesMap.clear();
@@ -83,10 +81,10 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("displayOrder", displayOrder.toString());
         valuesMap.put("active", active);
         convertedJson = JsonUtil.readJsonFileAsString("FacilityType.json", valuesMap);
-        JsonNode facilityTypeJson = getFacilityTypeHelper().createFacilityType(REQUISITIONS_URL, tokenValue, convertedJson);
+        JsonNode facilityTypeJson = getFacilityTypeHelper().createFacilityType(tokenValue, convertedJson);
         String facilityTypesHref = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
-        JsonNode facilityJson = getFacilityHelper().createFacility(REQUISITIONS_URL, tokenValue, facilityTypesHref, geographicZone);
-        JsonNode scheduleJson = getScheduleHelper().createSchedule(REQUISITIONS_URL, tokenValue);
+        JsonNode facilityJson = getFacilityHelper().createFacility(tokenValue, facilityTypesHref, geographicZone);
+        JsonNode scheduleJson = getScheduleHelper().createSchedule(tokenValue);
 
     }
 }

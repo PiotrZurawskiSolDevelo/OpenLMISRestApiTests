@@ -6,18 +6,23 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
-public class FacilityHelper {
+public class FacilityHelper extends AbstractRestHelper {
 
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public JsonNode createFacility(String serverURL,String token, String facilityTypesHref, String geographicZonesHref) throws IOException {
-        String APIUrl = serverURL + "/api/facilities" + token;
+    public FacilityHelper(String url) {
+        super(url);
+    }
+
+    public JsonNode createFacility(String token, String facilityTypesHref, String geographicZonesHref) throws IOException {
+        String APIUrl = getBaseUrl() + "/api/facilities" + token;
         String APIBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
                 "\"geographicZone\":\"" + geographicZonesHref + "\"," +
                 "\"type\":\"" + facilityTypesHref + "\"," +

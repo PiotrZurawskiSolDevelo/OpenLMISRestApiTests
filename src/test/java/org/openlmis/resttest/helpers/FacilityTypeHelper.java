@@ -8,6 +8,7 @@ import io.restassured.specification.RequestSpecification;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
+import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
@@ -16,17 +17,21 @@ public class FacilityTypeHelper extends AbstractRestHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public FacilityTypeHelper(String url) {
-        super(url);
+    public FacilityTypeHelper(String baseUrl) {
+        super(baseUrl, "/api/facilityTypes");
     }
 
     public JsonNode createFacilityType(String token, String jsonBody) throws IOException {
-        String APIUrl = getBaseUrl() + "/api/facilityTypes" + token;
+        URI apiUri = uri(token);
+
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
+
         RequestSpecification requestSpec = builder.build();
-        Response response = given().spec(requestSpec).post(APIUrl);
+
+        Response response = given().spec(requestSpec).post(apiUri);
         String responseSting = response.asString();
+
         return mapper.readTree(responseSting);
     }
 }

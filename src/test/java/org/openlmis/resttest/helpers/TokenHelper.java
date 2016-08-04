@@ -8,6 +8,8 @@ import io.restassured.specification.RequestSpecification;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static io.restassured.RestAssured.given;
 
@@ -17,16 +19,28 @@ public class TokenHelper extends AbstractRestHelper {
     ObjectMapper mapper = new ObjectMapper();
 
     public TokenHelper(String baseUrl) {
-        super(baseUrl);
+        super(baseUrl, "/oauth/token");
     }
 
     public String returnCreatedToken() throws IOException {
-        String APIUrl = getBaseUrl() + "/oauth/token?grant_type=password&username=admin&password=password";
-        builder.setContentType("application/json");
-        RequestSpecification requestSpec = builder.build();
-        Response response = given().authentication().preemptive().basic("trusted-client", "secret").spec(requestSpec).when().post(APIUrl);
-        String responseSting = response.getBody().asString();
-        JsonNode obj = mapper.readTree(responseSting);
-        return obj.get("access_token").textValue();
+        try {
+            URI apiUrl = uriBuilder()
+                    .addParameter("grant_type", "password")
+                    .addParameter("username", "admin")
+                    .addParameter("password", "password")
+                    .build();
+
+            builder.setContentType("application/json");
+            RequestSpecification requestSpec = builder.build();
+
+            Response response = given().auth().preemptive().basic("trusted-client", "secret").spec(requestSpec).when().post(apiUrl);
+
+            String responseSting = response.getBody().asString();
+            JsonNode obj = mapper.readTree(responseSting);
+
+            return obj.get("access_token").textValue();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Unable to build url", e);
+        }
     }
 }

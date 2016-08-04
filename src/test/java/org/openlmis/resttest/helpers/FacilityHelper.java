@@ -9,6 +9,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
+import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
@@ -17,22 +18,27 @@ public class FacilityHelper extends AbstractRestHelper {
     RequestSpecBuilder builder = new RequestSpecBuilder();
     ObjectMapper mapper = new ObjectMapper();
 
-    public FacilityHelper(String url) {
-        super(url);
+    public FacilityHelper(String baseUrl) {
+        super(baseUrl, "/api/facilities");
     }
 
     public JsonNode createFacility(String token, String facilityTypesHref, String geographicZonesHref) throws IOException {
-        String APIUrl = getBaseUrl() + "/api/facilities" + token;
-        String APIBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
+        URI apiUrl = uri(token);
+
+        String apiBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
                 "\"geographicZone\":\"" + geographicZonesHref + "\"," +
                 "\"type\":\"" + facilityTypesHref + "\"," +
                 "\"active\":" + true + "," +
                 "\"enabled\": " + false + "}";
+
         builder.setContentType("application/json");
-        builder.setBody(APIBody);
+        builder.setBody(apiBody);
+
         RequestSpecification requestSpec = builder.build();
-        Response response = given().spec(requestSpec).post(APIUrl);
+
+        Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
+
         return mapper.readTree(responseSting);
     }
 }

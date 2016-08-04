@@ -17,11 +17,11 @@ import java.util.Map;
  */
 public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
 
-    private String tokenValue = "?access_token=";
+    private String token = "?access_token=";
 
     @Before
     public void setUp() throws IOException {
-        tokenValue += getTokenHelper().returnCreatedToken();
+        token += getTokenHelper().returnCreatedToken();
     }
 
     //OLMIS-230
@@ -43,7 +43,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
 
         String convertedJson = JsonUtil.readJsonFileAsString("Program.json", valuesMap);
-        JsonNode program1 = getProgramHelper().createOrEditProgramUsingAllVariables(tokenValue, convertedJson);
+        JsonNode program1 = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
         JsonNode links = program1.get("_links");
         JsonNode programJson = links.get("program");
 
@@ -56,7 +56,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         valuesMap.put("id", id);
 
         convertedJson = JsonUtil.readJsonFileAsString("EditProgram.json", valuesMap);
-        JsonNode program2 = getProgramHelper().createOrEditProgramUsingAllVariables(tokenValue, convertedJson);
+        JsonNode program2 = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
 
         Assert.assertEquals(id, program2.get("_links").get("program").get("href").asText().substring((getRequisitionsUrl() + "/api/programs/").length()));
         Assert.assertNotEquals(program1.get("code").asText(), program2.get("code").asText());

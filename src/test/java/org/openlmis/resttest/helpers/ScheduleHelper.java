@@ -9,6 +9,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
+import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
@@ -18,18 +19,22 @@ public class ScheduleHelper extends AbstractRestHelper {
     ObjectMapper mapper = new ObjectMapper();
 
     public ScheduleHelper(String baseUrl) {
-        super(baseUrl);
+        super(baseUrl, "api/schedule");
     }
 
     public JsonNode createSchedule(String token) throws IOException {
-        String APIUrl = getBaseUrl() + "/api/schedules" + token;
-        String APIBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
+        URI apiUrl = uri(token);
+
+        String apiBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
                 "\"name\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"}";
         builder.setContentType("application/json");
-        builder.setBody(APIBody);
+        builder.setBody(apiBody);
+
         RequestSpecification requestSpec = builder.build();
-        Response response = given().spec(requestSpec).post(APIUrl);
+
+        Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
+
         return mapper.readTree(responseSting);
     }
 }

@@ -8,6 +8,8 @@ import io.restassured.specification.RequestSpecification;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
+import java.net.URI;
+
 import static io.restassured.RestAssured.given;
 
 public class ProgramHelper extends AbstractRestHelper {
@@ -16,16 +18,20 @@ public class ProgramHelper extends AbstractRestHelper {
     ObjectMapper mapper = new ObjectMapper();
 
     public ProgramHelper(String baseUrl) {
-        super(baseUrl);
+        super(baseUrl, "/api/programs");
     }
 
     public JsonNode createOrEditProgramUsingAllVariables(String token, String jsonBody) throws IOException {
-        String APIUrl = getBaseUrl() + "/api/programs" + token;
+        URI apiUrl = uri(token);
+
         builder.setContentType("application/json");
         builder.setBody(jsonBody);
+
         RequestSpecification requestSpec = builder.build();
-        Response response = given().spec(requestSpec).post(APIUrl);
+
+        Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
+
         return mapper.readTree(responseSting);
     }
 }

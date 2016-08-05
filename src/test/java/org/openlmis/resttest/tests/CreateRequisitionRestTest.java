@@ -51,7 +51,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("levelNumber", levelNumber.toString());
         convertedJson = JsonUtil.readJsonFileAsString("json/GeographicLevel.json", valuesMap);
         JsonNode geographicLevelJson = getGeographicLevelHelper().createGeographicLevel(token, convertedJson);
-        String level = geographicLevelJson.get("_links").get("geographicLevelHelper").get("href").asText();
+        String level = geographicLevelJson.get("_links").get("geographicLevel").get("href").asText();
 
         valuesMap.clear();
         code = RandomStringUtils.randomAlphabetic(5);
@@ -82,9 +82,55 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("active", active);
         convertedJson = JsonUtil.readJsonFileAsString("json/FacilityType.json", valuesMap);
         JsonNode facilityTypeJson = getFacilityTypeHelper().createFacilityType(token, convertedJson);
-        String facilityTypesHref = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
-        JsonNode facilityJson = getFacilityHelper().createFacility(token, facilityTypesHref, geographicZone);
-        JsonNode scheduleJson = getScheduleHelper().createSchedule(token);
+        String type = facilityTypeJson.get("_links").get("facilityType").get("href").asText();
+/**
+        valuesMap.clear();
+        code = RandomStringUtils.randomAlphabetic(5);
+        name = RandomStringUtils.randomAlphabetic(5);
+        description = RandomStringUtils.randomAlphabetic(10);
+        displayOrder = rand.nextInt(50);
+        valuesMap.put("code", code);
+        valuesMap.put("name", name);
+        valuesMap.put("description", description);
+        valuesMap.put("displayOrder", displayOrder.toString());
+        convertedJson = JsonUtil.readJsonFileAsString("json/FacilityOperator.json", valuesMap);
+        JsonNode facilityOperatorJson = getFacilityOperatorHelper().createFacilityOperator(token, convertedJson);
+        String operator = facilityOperatorJson.get("_links").get("facilityOperator").get("href").asText();*/
 
+        valuesMap.clear();
+        code = RandomStringUtils.randomAlphabetic(5);
+        name = RandomStringUtils.randomAlphabetic(5);
+        description = RandomStringUtils.randomAlphabetic(10);
+        active = "false";
+        String goLiveDate = genrateDate();
+        String goDownDate = generateDateAfterPreviousDate(goLiveDate);
+        String comment = RandomStringUtils.randomAlphabetic(10);
+        String enabled = "false";
+        String openLmisAccessible = "true";
+        valuesMap.put("code", code);
+        valuesMap.put("name", name);
+        valuesMap.put("description", description);
+        valuesMap.put("geographicZone", geographicZone);
+/**        valuesMap.put("operator", operator);*/
+        valuesMap.put("type", type);
+        valuesMap.put("active", active);
+        valuesMap.put("goLiveDate", goLiveDate);
+        valuesMap.put("goDownDate", goDownDate);
+        valuesMap.put("comment", comment);
+        valuesMap.put("enabled", enabled);
+        valuesMap.put("openLmisAccessible", openLmisAccessible);
+        convertedJson = JsonUtil.readJsonFileAsString("json/Facility.json", valuesMap);
+        JsonNode facilityJson = getFacilityHelper().createFacility(token, convertedJson);
+        String facility = facilityJson.get("_links").get("facility").get("href").asText();
+
+        valuesMap.clear();
+        code = RandomStringUtils.randomAlphabetic(5);
+        name = RandomStringUtils.randomAlphabetic(5);
+        description = RandomStringUtils.randomAlphabetic(10);
+        valuesMap.put("code", code);
+        valuesMap.put("name", name);
+        valuesMap.put("description", description);
+        convertedJson = JsonUtil.readJsonFileAsString("json/Schedule.json", valuesMap);
+        JsonNode schedule = getScheduleHelper().createSchedule(token, convertedJson);
     }
 }

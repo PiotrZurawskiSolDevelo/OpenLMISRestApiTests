@@ -1,8 +1,9 @@
 {
   "code": "${code}",
   "name": "${name}",
+  "description": "${description}",
+  "geographicZone": "${geographicZone}",
   "type": "${type}",
-  "operator": "${operator}",
   "active": "${active}",
   "goLiveDate": "${goLiveDate}",
   "goDownDate": "${goDownDate}",

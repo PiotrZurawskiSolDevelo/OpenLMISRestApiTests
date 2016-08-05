@@ -18,19 +18,13 @@ public class FacilityHelper extends AbstractRestHelper {
         super(baseUrl, "/api/facilities");
     }
 
-    public JsonNode createFacility(String token, String facilityTypesHref, String geographicZonesHref) throws IOException {
+    public JsonNode createFacility(String token, String jsonBody) throws IOException {
         URI apiUrl = uri(token);
-
-        String apiBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
-                "\"geographicZone\":\"" + geographicZonesHref + "\"," +
-                "\"type\":\"" + facilityTypesHref + "\"," +
-                "\"active\":" + true + "," +
-                "\"enabled\": " + false + "}";
 
         RequestSpecBuilder builder = getRequestSpecBuilder();
 
         builder.setContentType("application/json");
-        builder.setBody(apiBody);
+        builder.setBody(jsonBody);
 
         RequestSpecification requestSpec = builder.build();
 

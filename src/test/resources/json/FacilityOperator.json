@@ -1,5 +1,6 @@
 {
   "code": "${code}",
+  "name": "${name}",
   "description": "${description}",
-  "name": "${name}"
+  "displayOrder": "${displayOrder}"
 }

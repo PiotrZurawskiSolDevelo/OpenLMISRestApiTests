@@ -2,6 +2,7 @@ package org.openlmis.resttest;
 
 import org.junit.Before;
 import org.openlmis.resttest.helpers.FacilityHelper;
+import org.openlmis.resttest.helpers.FacilityOperatorHelper;
 import org.openlmis.resttest.helpers.FacilityTypeHelper;
 import org.openlmis.resttest.helpers.GeographicLevelHelper;
 import org.openlmis.resttest.helpers.GeographicZoneHelper;
@@ -12,6 +13,7 @@ import org.openlmis.resttest.helpers.TokenHelper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Random;
 
 public abstract class AbstractRestTest {
 
@@ -22,12 +24,16 @@ public abstract class AbstractRestTest {
     private FacilityTypeHelper facilityTypeHelper;
     private FacilityHelper facilityHelper;
     private ScheduleHelper scheduleHelper;
+    private FacilityOperatorHelper facilityOperatorHelper;
+
+    private Random rand = new Random();
 
     private String requisitionsUrl;
     private String authUrl;
     private String username;
     private String password;
 
+    private Integer day;
     @Before
     public void baseSetUp() throws IOException {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("test-config.properties")) {
@@ -94,6 +100,10 @@ public abstract class AbstractRestTest {
         return facilityHelper;
     }
 
+    protected FacilityOperatorHelper getFacilityOperatorHelper() {
+        return facilityOperatorHelper;
+    }
+
     protected void setFacilityHelper(FacilityHelper facilityHelper) {
         this.facilityHelper = facilityHelper;
     }
@@ -120,5 +130,35 @@ public abstract class AbstractRestTest {
 
     protected String getPassword() {
         return password;
+    }
+
+    protected String genrateDate() {
+        day = rand.nextInt(20);
+        Integer month = rand.nextInt(12);
+        Integer year = rand.nextInt(17) + 2000;
+        String stringDay;
+        String stringMonth;
+        if (day < 10) {
+            stringDay = '0' + day.toString();
+        } else {
+            stringDay = day.toString();
+        }
+        if (month < 10) {
+            stringMonth = '0' + month.toString();
+        } else {
+            stringMonth = month.toString();
+        }
+        return year.toString() + '-' + stringMonth + '-' + stringDay;
+    }
+
+    protected String generateDateAfterPreviousDate(String date) {
+        String[] oldDate = date.split("-");
+        day = Integer.parseInt(oldDate[2]) + 5;
+        return oldDate[0] + '-' + oldDate[1] + '-' + day.toString();
+    }
+
+    protected String addValuesToJson(String jsonName, String values) {
+        return "";
+
     }
 }

@@ -15,19 +15,16 @@ import static io.restassured.RestAssured.given;
 public class ScheduleHelper extends AbstractRestHelper {
 
     public ScheduleHelper(String baseUrl) {
-        super(baseUrl, "api/schedule");
+        super(baseUrl, "/api/schedule");
     }
 
-    public JsonNode createSchedule(String token) throws IOException {
+    public JsonNode createSchedule(String token, String jsonBody) throws IOException {
         URI apiUrl = uri(token);
-
-        String apiBody = "{\"code\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"," +
-                "\"name\":\"" + RandomStringUtils.randomAlphabetic(5) + "\"}";
 
         RequestSpecBuilder builder = getRequestSpecBuilder();
 
         builder.setContentType("application/json");
-        builder.setBody(apiBody);
+        builder.setBody(jsonBody);
 
         RequestSpecification requestSpec = builder.build();
 

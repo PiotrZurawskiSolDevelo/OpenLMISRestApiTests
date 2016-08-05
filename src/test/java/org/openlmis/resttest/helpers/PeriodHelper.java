@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;
@@ -12,11 +11,11 @@ import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
-public class ScheduleHelper extends AbstractRestHelper {
+public class PeriodHelper extends AbstractRestHelper {
 
-    public ScheduleHelper(String baseUrl) { super(baseUrl, "/api/schedules"); }
+    public PeriodHelper(String baseUrl) { super(baseUrl, "/api/periods"); }
 
-    public JsonNode createSchedule(String token, String jsonBody) throws IOException {
+    public JsonNode createPeriod(String token, String jsonBody) throws IOException {
         URI apiUrl = uri(token);
 
         RequestSpecBuilder builder = getRequestSpecBuilder();
@@ -28,7 +27,8 @@ public class ScheduleHelper extends AbstractRestHelper {
 
         Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
-
+        System.out.println(responseSting);
         return getObjectMapper().readTree(responseSting);
     }
+
 }

@@ -40,7 +40,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
         String convertedJson = JsonUtil.readJsonFileAsString("json/Program.json", valuesMap);
-        JsonNode programJson = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
+        JsonNode program = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
 
         valuesMap.clear();
         code = RandomStringUtils.randomAlphabetic(5);
@@ -132,5 +132,25 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("description", description);
         convertedJson = JsonUtil.readJsonFileAsString("json/Schedule.json", valuesMap);
         JsonNode schedule = getScheduleHelper().createSchedule(token, convertedJson);
+
+        valuesMap.clear();
+        code = schedule.get("code").asText();
+        description = schedule.get("description").asText();
+        name = schedule.get("name").asText();
+        String modifiedDate = schedule.get("modifiedDate").asText();
+        String id = schedule.get("_links").get("schedule").get("href").asText().substring((getRequisitionsUrl() + "/api/schedules/").length());
+        valuesMap.put("id", id);
+        valuesMap.put("code", code);
+        valuesMap.put("scheduleDescription", description);
+        valuesMap.put("scheduleName", name);
+        valuesMap.put("modifiedDate", modifiedDate);
+        valuesMap.put("name", RandomStringUtils.randomAlphabetic(5));
+        valuesMap.put("description", RandomStringUtils.randomAlphabetic(10));
+        String date = genrateDate();
+        valuesMap.put("startDate", date);
+        valuesMap.put("endDate", generateDateAfterPreviousDate(date));
+        convertedJson = JsonUtil.readJsonFileAsString("json/Period.json", valuesMap);
+        //JsonNode period = getPeriodHelper().createPeriod(token, convertedJson);
+
     }
 }

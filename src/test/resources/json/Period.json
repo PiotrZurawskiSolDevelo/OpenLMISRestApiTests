@@ -1,0 +1,14 @@
+{
+  "processingSchedule":
+  {
+    "id": "${id}",
+    "code": "${code}",
+    "modifiedDate": "${modifiedDate}",
+    "description": "${scheduleDescription}",
+    "name": "${scheduleName}"
+  },
+  "name": "${name}",
+  "description": "${description}",
+  "startDate": "${startDate}",
+  "endDate": "${endDate}"
+}

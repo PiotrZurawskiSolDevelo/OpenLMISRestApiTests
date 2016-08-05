@@ -6,6 +6,7 @@ import org.openlmis.resttest.helpers.FacilityOperatorHelper;
 import org.openlmis.resttest.helpers.FacilityTypeHelper;
 import org.openlmis.resttest.helpers.GeographicLevelHelper;
 import org.openlmis.resttest.helpers.GeographicZoneHelper;
+import org.openlmis.resttest.helpers.PeriodHelper;
 import org.openlmis.resttest.helpers.ProgramHelper;
 import org.openlmis.resttest.helpers.ScheduleHelper;
 import org.openlmis.resttest.helpers.TokenHelper;
@@ -25,6 +26,7 @@ public abstract class AbstractRestTest {
     private FacilityHelper facilityHelper;
     private ScheduleHelper scheduleHelper;
     private FacilityOperatorHelper facilityOperatorHelper;
+    private PeriodHelper periodHelper;
 
     private Random rand = new Random();
 
@@ -100,10 +102,6 @@ public abstract class AbstractRestTest {
         return facilityHelper;
     }
 
-    protected FacilityOperatorHelper getFacilityOperatorHelper() {
-        return facilityOperatorHelper;
-    }
-
     protected void setFacilityHelper(FacilityHelper facilityHelper) {
         this.facilityHelper = facilityHelper;
     }
@@ -114,6 +112,18 @@ public abstract class AbstractRestTest {
 
     protected void setScheduleHelper(ScheduleHelper scheduleHelper) {
         this.scheduleHelper = scheduleHelper;
+    }
+
+    public PeriodHelper getPeriodHelper() { return periodHelper; }
+
+    public void setPeriodHelper(PeriodHelper periodHelper) {
+        this.periodHelper = periodHelper;
+    }
+
+    public FacilityOperatorHelper getFacilityOperatorHelper() { return facilityOperatorHelper; }
+
+    public void setFacilityOperatorHelper(FacilityOperatorHelper facilityOperatorHelper) {
+        this.facilityOperatorHelper = facilityOperatorHelper;
     }
 
     protected String getRequisitionsUrl() {

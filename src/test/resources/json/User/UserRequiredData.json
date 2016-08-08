@@ -1,0 +1,8 @@
+{
+  "username": "${username}",
+  "password": "${password}",
+  "firstName": "${firstName}",
+  "lastName": "${lastName}",
+  "verified": "${verified}",
+  "active": "${active}"
+}

@@ -10,6 +10,7 @@ import org.openlmis.resttest.helpers.PeriodHelper;
 import org.openlmis.resttest.helpers.ProgramHelper;
 import org.openlmis.resttest.helpers.ScheduleHelper;
 import org.openlmis.resttest.helpers.TokenHelper;
+import org.openlmis.resttest.helpers.UserHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +28,8 @@ public abstract class AbstractRestTest {
     private ScheduleHelper scheduleHelper;
     private FacilityOperatorHelper facilityOperatorHelper;
     private PeriodHelper periodHelper;
+
+    private UserHelper userHelper;
 
     private Random rand = new Random();
 
@@ -59,6 +62,7 @@ public abstract class AbstractRestTest {
             scheduleHelper = new ScheduleHelper(requisitionsUrl);
             facilityOperatorHelper = new FacilityOperatorHelper(requisitionsUrl);
             periodHelper =  new PeriodHelper(requisitionsUrl);
+            userHelper = new UserHelper(requisitionsUrl);
         }
     }
 
@@ -129,6 +133,10 @@ public abstract class AbstractRestTest {
     protected void setFacilityOperatorHelper(FacilityOperatorHelper facilityOperatorHelper) {
         this.facilityOperatorHelper = facilityOperatorHelper;
     }
+
+    public UserHelper getUserHelper() { return userHelper; }
+
+    public void setUserHelper(UserHelper userHelper) { this.userHelper = userHelper; }
 
     protected String getRequisitionsUrl() {
         return requisitionsUrl;

@@ -24,7 +24,7 @@ public class EditProgramCodeAndNameRestTest extends AbstractRestTest {
         token = getTokenHelper().returnCreatedToken(getUsername(), getPassword());
     }
 
-    //OLMIS-230
+    //OLMIS-230, OLMIS-387
     @Test
     public void createAndEditProgram() throws IOException {
         String code = RandomStringUtils.randomAlphabetic(5);

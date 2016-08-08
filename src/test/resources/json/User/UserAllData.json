@@ -1,0 +1,9 @@
+{
+  "username": "${username}",
+  "password": "${password}",
+  "firstName": "${firstName}",
+  "lastName": "${lastName}",
+  "homeFacility": "${homeFacility}",
+  "verified": "${verified}",
+  "active": "${active}"
+}

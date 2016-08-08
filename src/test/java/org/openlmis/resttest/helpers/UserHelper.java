@@ -11,14 +11,14 @@ import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
-public class FacilityTypeHelper extends AbstractRestHelper {
+public class UserHelper extends AbstractRestHelper {
 
-    public FacilityTypeHelper(String baseUrl) {
-        super(baseUrl, "/api/facilityTypes");
+    public UserHelper(String baseUrl) {
+        super(baseUrl, "/api/users");
     }
 
-    public JsonNode createFacilityType(String token, String jsonBody) throws IOException {
-        URI apiUri = uri(token);
+    public JsonNode createUser(String token, String jsonBody) throws IOException {
+        URI apiUrl = uri(token);
 
         RequestSpecBuilder builder = getRequestSpecBuilder();
 
@@ -27,9 +27,8 @@ public class FacilityTypeHelper extends AbstractRestHelper {
 
         RequestSpecification requestSpec = builder.build();
 
-        Response response = given().spec(requestSpec).post(apiUri);
+        Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
-
         return getObjectMapper().readTree(responseSting);
     }
 }

@@ -40,7 +40,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("periodsSkippable", periodsSkippable);
         valuesMap.put("showNonFullSupplyTab", showNonFullSupplyTab);
         String convertedJson = JsonUtil.readJsonFileAsString("json/Program.json", valuesMap);
-        JsonNode program = getProgramHelper().createOrEditProgramUsingAllVariables(token, convertedJson);
+        JsonNode program = getProgramHelper().createOrEditProgram(token, convertedJson);
 
         valuesMap.clear();
         code = RandomStringUtils.randomAlphabetic(5);
@@ -150,7 +150,8 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("startDate", date);
         valuesMap.put("endDate", generateDateAfterPreviousDate(date));
         convertedJson = JsonUtil.readJsonFileAsString("json/Period.json", valuesMap);
-        //JsonNode period = getPeriodHelper().createPeriod(token, convertedJson);
-
+        JsonNode period = getPeriodHelper().createPeriod(token, convertedJson);
+        id = period.get("id").asText();
+        System.out.println(id);
     }
 }

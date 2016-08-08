@@ -1,0 +1,9 @@
+{
+  "facility": "${facility}",
+  "program": "${program}",
+  "processingPeriod": "${processingPeriod}",
+  "status": "${status}",
+  "emergency": "${emergency}",
+  "remarks": "${remarks}",
+  "supervisoryNode": "${supervisoryNode}"
+}

@@ -17,7 +17,7 @@ public class ProgramHelper extends AbstractRestHelper {
         super(baseUrl, "/api/programs");
     }
 
-    public JsonNode createOrEditProgramUsingAllVariables(String token, String jsonBody) throws IOException {
+    public JsonNode createOrEditProgram(String token, String jsonBody) throws IOException {
         URI apiUrl = uri(token);
 
         RequestSpecBuilder builder = getRequestSpecBuilder();

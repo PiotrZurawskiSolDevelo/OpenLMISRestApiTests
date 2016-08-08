@@ -27,6 +27,7 @@ public class PeriodHelper extends AbstractRestHelper {
 
         Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
+
         System.out.println(responseSting);
         return getObjectMapper().readTree(responseSting);
     }

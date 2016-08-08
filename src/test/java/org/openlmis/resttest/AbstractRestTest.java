@@ -34,8 +34,10 @@ public abstract class AbstractRestTest {
     private String authUrl;
     private String username;
     private String password;
+    private String stringDay;
 
     private Integer day;
+
     @Before
     public void baseSetUp() throws IOException {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("test-config.properties")) {
@@ -55,6 +57,8 @@ public abstract class AbstractRestTest {
             facilityTypeHelper = new FacilityTypeHelper(requisitionsUrl);
             facilityHelper = new FacilityHelper(requisitionsUrl);
             scheduleHelper = new ScheduleHelper(requisitionsUrl);
+            facilityOperatorHelper = new FacilityOperatorHelper(requisitionsUrl);
+            periodHelper =  new PeriodHelper(requisitionsUrl);
         }
     }
 
@@ -114,15 +118,15 @@ public abstract class AbstractRestTest {
         this.scheduleHelper = scheduleHelper;
     }
 
-    public PeriodHelper getPeriodHelper() { return periodHelper; }
+    protected PeriodHelper getPeriodHelper() { return periodHelper; }
 
-    public void setPeriodHelper(PeriodHelper periodHelper) {
+    protected void setPeriodHelper(PeriodHelper periodHelper) {
         this.periodHelper = periodHelper;
     }
 
-    public FacilityOperatorHelper getFacilityOperatorHelper() { return facilityOperatorHelper; }
+    protected FacilityOperatorHelper getFacilityOperatorHelper() { return facilityOperatorHelper; }
 
-    public void setFacilityOperatorHelper(FacilityOperatorHelper facilityOperatorHelper) {
+    protected void setFacilityOperatorHelper(FacilityOperatorHelper facilityOperatorHelper) {
         this.facilityOperatorHelper = facilityOperatorHelper;
     }
 
@@ -146,7 +150,6 @@ public abstract class AbstractRestTest {
         day = rand.nextInt(20);
         Integer month = rand.nextInt(12);
         Integer year = rand.nextInt(17) + 2000;
-        String stringDay;
         String stringMonth;
         if (day < 10) {
             stringDay = '0' + day.toString();
@@ -164,7 +167,12 @@ public abstract class AbstractRestTest {
     protected String generateDateAfterPreviousDate(String date) {
         String[] oldDate = date.split("-");
         day = Integer.parseInt(oldDate[2]) + 5;
-        return oldDate[0] + '-' + oldDate[1] + '-' + day.toString();
+        if(day <10) {
+            stringDay = '0' + day.toString();
+        } else {
+            stringDay = day.toString();
+        }
+        return oldDate[0] + '-' + oldDate[1] + '-' + stringDay;
     }
 
     protected String addValuesToJson(String jsonName, String values) {

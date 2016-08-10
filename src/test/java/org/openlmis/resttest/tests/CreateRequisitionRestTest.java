@@ -103,7 +103,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         description = RandomStringUtils.randomAlphabetic(10);
         active = "false";
         String goLiveDate = genrateDate();
-        String goDownDate = generateDateAfterPreviousDate(goLiveDate);
+        String goDownDate = generateDateAfterGivenDate(goLiveDate, 1);
         String comment = RandomStringUtils.randomAlphabetic(10);
         String enabled = "false";
         String openLmisAccessible = "true";
@@ -148,7 +148,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
         valuesMap.put("description", RandomStringUtils.randomAlphabetic(10));
         String date = genrateDate();
         valuesMap.put("startDate", date);
-        valuesMap.put("endDate", generateDateAfterPreviousDate(date));
+        valuesMap.put("endDate", generateDateAfterGivenDate(date, 1));
         convertedJson = JsonUtil.readJsonFileAsString("json/Period.json", valuesMap);
         JsonNode period = getPeriodHelper().createPeriod(token, convertedJson);
         id = period.get("id").asText();

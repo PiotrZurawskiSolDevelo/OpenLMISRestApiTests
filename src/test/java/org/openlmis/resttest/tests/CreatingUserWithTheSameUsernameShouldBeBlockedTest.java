@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * This test should create new Program, edit the created program and check the possibility of changing both the Program code and Program name;
  */
-public class CreatingUserWithTheSameUsernameShouldBeBlocked extends AbstractRestTest {
+public class CreatingUserWithTheSameUsernameShouldBeBlockedTest extends AbstractRestTest {
 
     private String token;
 

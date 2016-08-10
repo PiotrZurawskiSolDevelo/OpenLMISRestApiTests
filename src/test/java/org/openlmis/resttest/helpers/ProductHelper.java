@@ -11,11 +11,13 @@ import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
-public class PeriodHelper extends AbstractRestHelper {
+public class ProductHelper extends AbstractRestHelper {
 
-    public PeriodHelper(String baseUrl) { super(baseUrl, "/api/periods"); }
+    public ProductHelper(String baseUrl) {
+        super(baseUrl, "/api/products");
+    }
 
-    public JsonNode createPeriod(String token, String jsonBody) throws IOException {
+    public JsonNode createProduct(String token, String jsonBody) throws IOException {
         URI apiUrl = uri(token);
 
         RequestSpecBuilder builder = getRequestSpecBuilder();
@@ -26,20 +28,6 @@ public class PeriodHelper extends AbstractRestHelper {
         RequestSpecification requestSpec = builder.build();
 
         Response response = given().spec(requestSpec).post(apiUrl);
-        String responseSting = response.asString();
-        return getObjectMapper().readTree(responseSting);
-    }
-
-    public JsonNode getPeriods(String token) throws IOException {
-        URI apiUrl = uri(token);
-
-        RequestSpecBuilder builder = getRequestSpecBuilder();
-
-        builder.setContentType("application/json");
-
-        RequestSpecification requestSpec = builder.build();
-
-        Response response = given().spec(requestSpec).get(apiUrl);
         String responseSting = response.asString();
         return getObjectMapper().readTree(responseSting);
     }

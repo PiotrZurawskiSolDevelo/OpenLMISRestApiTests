@@ -7,6 +7,8 @@ import org.openlmis.resttest.helpers.FacilityTypeHelper;
 import org.openlmis.resttest.helpers.GeographicLevelHelper;
 import org.openlmis.resttest.helpers.GeographicZoneHelper;
 import org.openlmis.resttest.helpers.PeriodHelper;
+import org.openlmis.resttest.helpers.ProductCategoryHelper;
+import org.openlmis.resttest.helpers.ProductHelper;
 import org.openlmis.resttest.helpers.ProgramHelper;
 import org.openlmis.resttest.helpers.ScheduleHelper;
 import org.openlmis.resttest.helpers.TokenHelper;
@@ -28,8 +30,9 @@ public abstract class AbstractRestTest {
     private ScheduleHelper scheduleHelper;
     private FacilityOperatorHelper facilityOperatorHelper;
     private PeriodHelper periodHelper;
-
+    private ProductCategoryHelper productCategoryHelper;
     private UserHelper userHelper;
+    private ProductHelper productHelper;
 
     private Random rand = new Random();
 
@@ -63,6 +66,8 @@ public abstract class AbstractRestTest {
             facilityOperatorHelper = new FacilityOperatorHelper(requisitionsUrl);
             periodHelper =  new PeriodHelper(requisitionsUrl);
             userHelper = new UserHelper(requisitionsUrl);
+            productCategoryHelper = new ProductCategoryHelper(requisitionsUrl);
+            productHelper = new ProductHelper(requisitionsUrl);
         }
     }
 
@@ -134,9 +139,23 @@ public abstract class AbstractRestTest {
         this.facilityOperatorHelper = facilityOperatorHelper;
     }
 
-    public UserHelper getUserHelper() { return userHelper; }
+    protected ProductCategoryHelper getProductCategoryHelper() { return productCategoryHelper; }
 
-    public void setUserHelper(UserHelper userHelper) { this.userHelper = userHelper; }
+    protected void setProductCategoryHelper(ProductCategoryHelper productCategoryHelper) {
+        this.productCategoryHelper = productCategoryHelper;
+    }
+
+    protected ProductHelper getProductHelper() { return productHelper; }
+
+    protected void setProductHelper(ProductHelper productHelper) { this.productHelper = productHelper; }
+
+    protected Random getRand() { return rand; }
+
+    protected void setRand(Random rand) { this.rand = rand; }
+
+    protected UserHelper getUserHelper() { return userHelper; }
+
+    protected void setUserHelper(UserHelper userHelper) { this.userHelper = userHelper; }
 
     protected String getRequisitionsUrl() {
         return requisitionsUrl;
@@ -172,10 +191,10 @@ public abstract class AbstractRestTest {
         return year.toString() + '-' + stringMonth + '-' + stringDay;
     }
 
-    protected String generateDateAfterPreviousDate(String date) {
+    protected String generateDateAfterGivenDate(String date, Integer countDays) {
         String[] oldDate = date.split("-");
-        day = Integer.parseInt(oldDate[2]) + 5;
-        if(day <10) {
+        day = Integer.parseInt(oldDate[2]) + countDays;
+        if (day <10) {
             stringDay = '0' + day.toString();
         } else {
             stringDay = day.toString();

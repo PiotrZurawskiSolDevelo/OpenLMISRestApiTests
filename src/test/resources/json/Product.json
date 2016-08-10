@@ -1,0 +1,13 @@
+{
+  "code": "${code}",
+  "primaryName": "${primaryName}",
+  "dispensingUnit": "${dispensingUnit}",
+  "dosesPerDispensingUnit": "${dosesPerDispensingUnit}",
+  "packSize": "${packSize}",
+  "packRoundingThreshold": "${packRoundingThreshold}",
+  "roundToZero": "${roundToZero}",
+  "active": "${active}",
+  "fullSupply": "${fullSupply}",
+  "tracer": "${tracer}",
+  "productCategory": "${productCategory}"
+}

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openlmis.resttest.AbstractRestHelper;
 
 import java.io.IOException;

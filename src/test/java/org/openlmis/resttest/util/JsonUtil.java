@@ -17,7 +17,7 @@ public final class JsonUtil {
 
     public static String readJsonFileAsString(String filename, Map<String, String> params) throws IOException {
         try (InputStream in = JsonUtil.class.getClassLoader().getResourceAsStream(filename)) {
-            String value = IOUtils.toString(in, Charset.forName("UTF-8"));
+            String value = IOUtils.toString(in, String.valueOf(Charset.forName("UTF-8")));
             StrSubstitutor sub = new StrSubstitutor(params);
             return sub.replace(value);
         }

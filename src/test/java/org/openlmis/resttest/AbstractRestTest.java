@@ -16,6 +16,9 @@ import org.openlmis.resttest.helpers.UserHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.Random;
 
@@ -35,14 +38,12 @@ public abstract class AbstractRestTest {
     private ProductHelper productHelper;
 
     private Random rand = new Random();
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private String requisitionsUrl;
     private String authUrl;
     private String username;
     private String password;
-    private String stringDay;
-
-    private Integer day;
 
     @Before
     public void baseSetUp() throws IOException {
@@ -153,6 +154,10 @@ public abstract class AbstractRestTest {
 
     protected void setRand(Random rand) { this.rand = rand; }
 
+    protected SimpleDateFormat getSimpleDateFormat() { return simpleDateFormat; }
+
+    protected void setSimpleDateFormat(SimpleDateFormat simpleDateFormat) { this.simpleDateFormat = simpleDateFormat; }
+
     protected UserHelper getUserHelper() { return userHelper; }
 
     protected void setUserHelper(UserHelper userHelper) { this.userHelper = userHelper; }
@@ -174,32 +179,18 @@ public abstract class AbstractRestTest {
     }
 
     protected String genrateDate() {
-        day = rand.nextInt(20);
-        Integer month = rand.nextInt(12);
-        Integer year = rand.nextInt(17) + 2000;
-        String stringMonth;
-        if (day < 10) {
-            stringDay = '0' + day.toString();
-        } else {
-            stringDay = day.toString();
-        }
-        if (month < 10) {
-            stringMonth = '0' + month.toString();
-        } else {
-            stringMonth = month.toString();
-        }
-        return year.toString() + '-' + stringMonth + '-' + stringDay;
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_MONTH, 10);
+        c.set(Calendar.MONTH, rand.nextInt(12)+1);
+        c.set(Calendar.YEAR, 2016);
+        return simpleDateFormat.format(c.getTime());
     }
 
-    protected String generateDateAfterGivenDate(String date, Integer countDays) {
-        String[] oldDate = date.split("-");
-        day = Integer.parseInt(oldDate[2]) + countDays;
-        if (day <10) {
-            stringDay = '0' + day.toString();
-        } else {
-            stringDay = day.toString();
-        }
-        return oldDate[0] + '-' + oldDate[1] + '-' + stringDay;
+    protected String generateDateAfterGivenDate(String date, Integer countDays) throws ParseException {
+        Calendar c = Calendar.getInstance();
+        c.setTime(simpleDateFormat.parse(date));
+        c.add(Calendar.DATE, countDays);
+        return simpleDateFormat.format(c.getTime());
     }
 
     protected String addValuesToJson(String jsonName, String values) {

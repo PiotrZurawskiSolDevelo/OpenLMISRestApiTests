@@ -8,6 +8,7 @@ import org.openlmis.resttest.AbstractRestTest;
 import org.openlmis.resttest.util.JsonUtil;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -25,7 +26,7 @@ public class CreateRequisitionRestTest extends AbstractRestTest {
 
     // TODO: map logic should go to helpers
     @Test
-    public void createRequisition() throws IOException {
+    public void createRequisition() throws IOException, ParseException {
         String code = RandomStringUtils.randomAlphabetic(5);
         String name = RandomStringUtils.randomAlphabetic(5);
         String description = RandomStringUtils.randomAlphabetic(10);

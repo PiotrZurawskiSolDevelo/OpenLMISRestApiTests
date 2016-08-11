@@ -6,12 +6,14 @@ import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 
 public abstract class AbstractRestHelper {
 
     // TODO: Use RAML for rest assured
     private RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
     private ObjectMapper objectMapper = new ObjectMapper();
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private String baseUrl;
     private String path;
@@ -67,4 +69,8 @@ public abstract class AbstractRestHelper {
             throw new IllegalStateException("Unable to build url", e);
         }
     }
+
+    protected SimpleDateFormat getSimpleDateFormat() { return simpleDateFormat; }
+
+    protected void setSimpleDateFormat(SimpleDateFormat simpleDateFormat) { this.simpleDateFormat = simpleDateFormat; }
 }

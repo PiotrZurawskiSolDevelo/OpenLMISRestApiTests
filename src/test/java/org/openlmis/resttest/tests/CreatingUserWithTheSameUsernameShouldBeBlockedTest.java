@@ -9,11 +9,12 @@ import org.openlmis.resttest.AbstractRestTest;
 import org.openlmis.resttest.util.JsonUtil;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This test should create new Program, edit the created program and check the possibility of changing both the Program code and Program name;
+ * This test should create new Program, edit the created program and check the possibility to change Program code and Program name;
  */
 public class CreatingUserWithTheSameUsernameShouldBeBlockedTest extends AbstractRestTest {
 
@@ -26,7 +27,7 @@ public class CreatingUserWithTheSameUsernameShouldBeBlockedTest extends Abstract
 
     //OLMIS-856
     @Test
-    public void checkPossibilityToCreateUserWithTheSameUsername() throws IOException {
+    public void checkPossibilityToCreateUserWithTheSameUsername() throws IOException, ParseException {
         String username = RandomStringUtils.randomAlphabetic(8);
         String password = RandomStringUtils.randomAlphabetic(8);
         String firstName = RandomStringUtils.randomAlphabetic(8);

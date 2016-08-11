@@ -32,7 +32,6 @@ public class PeriodHelper extends AbstractRestHelper {
 
         Response response = given().spec(requestSpec).post(apiUrl);
         String responseSting = response.asString();
-        System.out.println(responseSting);
         return getObjectMapper().readTree(responseSting);
     }
     /**
@@ -49,7 +48,6 @@ public class PeriodHelper extends AbstractRestHelper {
 
         Response response = given().spec(requestSpec).get(apiUrl);
         String responseSting = response.asString();
-        System.out.println(responseSting);
         return getObjectMapper().readTree(responseSting);
     }
     /**
@@ -82,5 +80,19 @@ public class PeriodHelper extends AbstractRestHelper {
             }
         }
         return latesDate;
+    }
+    /**
+     * This method should return calculated count of the days and months
+     * */
+    public String getCalculatedDaysAndMonths(String token, String periodId) {
+        String apiUrl = getBaseUrl() + "/api/periods/" + periodId + "/difference?access_token=" + token;
+        RequestSpecBuilder builder = getRequestSpecBuilder();
+
+        builder.setContentType("application/json");
+
+        RequestSpecification requestSpec = builder.build();
+
+        Response response = given().spec(requestSpec).get(apiUrl);
+        return response.asString();
     }
 }

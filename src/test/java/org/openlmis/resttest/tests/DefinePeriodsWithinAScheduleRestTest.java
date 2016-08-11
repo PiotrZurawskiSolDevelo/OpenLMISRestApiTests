@@ -51,7 +51,7 @@ public class DefinePeriodsWithinAScheduleRestTest extends AbstractRestTest {
         } else {
             firstStartDate = generateDateAfterGivenDate(latestDayFromPeriod, 1);
         }
-        String firstEndDate = generateDateAfterGivenDate(firstStartDate, 5);
+        String firstEndDate = generateDateAfterGivenDate(firstStartDate, 2);
         valuesMap.put("id", id);
         valuesMap.put("code", code);
         valuesMap.put("scheduleDescription", description);
@@ -106,8 +106,10 @@ public class DefinePeriodsWithinAScheduleRestTest extends AbstractRestTest {
         valuesMap.put("endDate", thirdEndDate);
         convertedJson = JsonUtil.readJsonFileAsString("json/Period.json", valuesMap);
         JsonNode thirdPeriod = getPeriodHelper().createPeriod(token, convertedJson);
+        String calculatedDifference = getPeriodHelper().getCalculatedDaysAndMonths(token, firstPeriod.get("id").asText());
         /**Asserting response from the server*/
         Assert.assertNotEquals(firstPeriod.get("id").asText(), thirdPeriod.get("id").asText());
         Assert.assertEquals(firstPeriod.get("processingSchedule").get("id").asText(), thirdPeriod.get("processingSchedule").get("id").asText());
+        Assert.assertEquals(calculatedDifference, "\"Period lasts 0 months and " + calculateDifferenceBetweenDates(firstStartDate, firstEndDate) + " days\"");
     }
 }

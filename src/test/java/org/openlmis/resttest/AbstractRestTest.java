@@ -19,8 +19,10 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractRestTest {
 
@@ -195,6 +197,12 @@ public abstract class AbstractRestTest {
 
     protected String addValuesToJson(String jsonName, String values) {
         return "";
+    }
 
+    protected long calculateDifferenceBetweenDates(String startDate, String endDate) throws ParseException {
+        Date date1 = simpleDateFormat.parse(startDate);
+        Date date2 = simpleDateFormat.parse(endDate);
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS) + 1;
     }
 }
